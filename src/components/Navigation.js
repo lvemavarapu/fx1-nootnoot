@@ -1,26 +1,28 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Navigation = ({loggedInUser, setLoggedInUser}) =>{
     
     function logout(e){
         e.preventDefault()
-        setLoggedInUser("")
         console.log("log out")
+       setLoggedInUser("")
     }
     
     return(
         <div>
-            <a href="/">Home</a>
-            <a href="/">About</a>
+            <Link to ="/messages">Home</Link>
+           <Link to ="/about">About</Link>
             {loggedInUser?
                 <>
-                    <a href="/" onClick={logout}>Sign Out</a>
-                    {loggedInUser}
+                         {loggedInUser}
+                         <Link to ="/newmessage">Post an new message</Link>
+                         <Link to ="/messages" onClick ={logout}>SignOut</Link>
                 </>
                 :
                 <>
-                    <a href="/">Login</a>
-                    <a href="/">SignUp</a>
+                    <Link to ="/login">Login</Link>
+                    <Link to ="/SignUp">Sign Up</Link>
                     Guest
                 </>
             }

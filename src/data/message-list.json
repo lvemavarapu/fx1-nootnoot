@@ -1,5 +1,5 @@
 [
-    {"text": "Have you watched The Squid game? That was CREEPY" ,"user": "cinemakid@email.com"},
-    {"text": "What a game last night! Go Lions" ,"user": "lionsforever@email.com"},
-    {"text": "Bitcoin, what are you doing?" ,"user": "cryptominer@email.com"}
+    {"id":1,"text": "Have you watched The Squid game? That was CREEPY" ,"user": "cinemakid@email.com"},
+    {"id":2,"text": "What a game last night! Go Lions" ,"user": "lionsforever@email.com"},
+    {"id":3,"text": "Bitcoin, what are you doing?" ,"user": "cryptominer@email.com"}
 ]

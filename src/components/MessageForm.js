@@ -1,32 +1,43 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
-const MessageForm = ({addMessage}) =>{
+const MessageForm =({history, loggedInUser, addMessage})=>{
     const initialFormData = {
-        text:""
+        text: ""
     }
+
     const [formData, setFormData] = useState(initialFormData)
 
-
-    function handleSubmit(e){
-        e.preventDefault()
-        addMessage(formData.text)
-    }
     function handleFormData(e){
-        //console.log(e.target)
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
 
-    return(
-        
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="text" id="text" placeholder="What's going on today" onChange={handleFormData} />
-                <input type="submit" value="Send" />
+    function handleSubmit(e){
+        e.preventDefault()
+        console.log(formData)
+        addMessage(formData.text)
+        //clean the form after submitting
+        setFormData({
+            ...formData,
+            text: ""
+        })
+        return history.push("/messages")
+    }
 
-            </form>
+    return(
+        <div>
+            {loggedInUser?
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="text">What's on your mind {loggedInUser}?</label>
+                    <input type="text" name="text" id="text" value={formData.text} onChange={handleFormData}/>
+                    <input type="submit" value="Send" />
+                </form>
+            : 
+                <p>you're not logged in</p>
+            }
+            
         </div>
     )
 }
