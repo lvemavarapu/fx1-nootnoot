@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import Navigation from './Navigation'
 import LoginForm from './LoginForm'
 import MessageForm from './MessageForm'
@@ -8,14 +8,27 @@ import { BrowserRouter, Route, Switch,Redirect } from 'react-router-dom'
 import About from './About'
 import NotFound from './NotFound'
 import Message from './Message'
+import reducer from '../utils/reducer'
 
 
 const App = () => {
-  const [loggedInUser, setLoggedInUser] = useState("")
-  const [messageList, setMessageList] = useState([])
+  //const [loggedInUser, setLoggedInUser] = useState("")
+  // const [messageList, setMessageList] = useState([])
+
+  const initialState ={
+    messageList:[],
+    loggedInUser:""
+  }
+  const[store,dispatch]=useReducer(reducer,initialState)
+  const{messageList,loggedInUser} =store
+  
 
   function activateUser(name){
-    setLoggedInUser(name)
+   // setLoggedInUser(name)
+   dispatch({
+     type: "setLoggedInUser",
+     data:name
+   })
   }
 
   function addMessage(text){
@@ -25,13 +38,21 @@ const App = () => {
       text: text,
       user: loggedInUser
     }
-    setMessageList(
-      (messageList) => [message, ...messageList]
-    )
+    // setMessageList(
+    //   (messageList) => [message, ...messageList]
+    // )
+    dispatch({
+      type:"addMessage",
+      data:message
+    })
   }
 
   useEffect(()=>{
-    setMessageList(initialMessageList)
+    //setMessageList(initialMessageList)
+    dispatch({
+      type: "setMessageList",
+      data:initialMessageList
+    })
   },[])
   // function getMessage(id){
   //   return messageList.find(m=> m.id === parseInt(id))
@@ -46,7 +67,7 @@ const App = () => {
           
           
           <BrowserRouter>
-          <Navigation loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
+          <Navigation loggedInUser={loggedInUser} activateUser={activateUser}/>
           <Switch>
           <Route exact path = "/">
             <Redirect to ="messages" />

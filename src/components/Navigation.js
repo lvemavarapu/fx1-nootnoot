@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Navigation = ({loggedInUser, setLoggedInUser}) =>{
+const Navigation = ({loggedInUser, activateUser}) =>{
     
     function logout(e){
         e.preventDefault()
         console.log("log out")
-       setLoggedInUser("")
+       activateUser("")
     }
     
     return(
