@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import { useGlobalState } from '../utils/stateContext'
 
-const MessageForm =({history, loggedInUser, addMessage})=>{
+const MessageForm =({history})=>{
+    const {store, dispatch} = useGlobalState()
+    const {loggedInUser,messageList}= store
+
     const initialFormData = {
         text: ""
     }
@@ -25,6 +29,25 @@ const MessageForm =({history, loggedInUser, addMessage})=>{
         })
         return history.push("/messages")
     }
+    function addMessage(text){
+
+        const message = {
+          id:getNextId(),
+          text: text,
+          user: loggedInUser
+        }
+        // setMessageList(
+        //   (messageList) => [message, ...messageList]
+        // )
+        dispatch({
+          type:"addMessage",
+          data:message
+        })
+      }
+      function getNextId(){
+        const ids = messageList.map(msg =>msg.id) //3 2 1
+        return ids.sort()[ids.length-1] +1
+      }
 
     return(
         <div>

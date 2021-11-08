@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import { useGlobalState } from '../utils/stateContext'
 
-const LoginForm =({history, activateUser})=>{
+const LoginForm =({history})=>{
+    const{dispatch} = useGlobalState()
+
     console.log(history)
     const initialFormData = {
         email: "",
@@ -20,8 +23,14 @@ const LoginForm =({history, activateUser})=>{
         e.preventDefault()
         //console.log("You clicked login: ", formData.email)
         //console.log(formData.password)
-        activateUser(formData.email)
+        //activateUser(formData.email)
+        dispatch({
+            type: "setLoggedInUser",
+            data:formData.email
+            
+        })
         return history.push("/messages")
+        
 
     }
 
