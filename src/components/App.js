@@ -46,7 +46,7 @@ const App = () => {
 
   return (
     <div >
-      <h1>Chatti</h1>
+      <h1>Nootnoot</h1>
       <StateContext.Provider value={{store, dispatch}}>
         <BrowserRouter>
           <Navigation/>
