@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-
 import { useGlobalState } from '../utils/stateContext'
-import { signIn } from '../services/authServices'
+import { signUp } from '../services/authServices'
 
-const LoginForm =({history})=>{
+const SignUpForm =({history})=>{
+
     const{dispatch} = useGlobalState()
 
     console.log(history)
@@ -23,22 +23,23 @@ const LoginForm =({history})=>{
 
     function handleSubmit(e){
         e.preventDefault()
-        signIn(formData)
-        .then(({username,jwt})=>{
-            sessionStorage.setItem("username",username)
-            sessionStorage.setItem("token",jwt)
-            dispatch({
-                type: "setLoggedInUser",
-                data:username
-                
-            })
-            dispatch({
-                type: "setToken",
-                data:jwt
-            })
+       signUp(formData)
+       .then(({username, jwt}) =>{
+           sessionStorage.setItem("username", username)
+           sessionStorage.setItem("token",jwt)
+        dispatch({
+            type: "setLoggedInUser",
+            data:username
+            
         })
-        .catch(error => console.log(error))
-        
+        dispatch({
+            type: "setToken",
+            data:jwt
+            
+        })
+       })
+       .catch(error =>{console.log(error)})
+       
         return history.push("/messages")
         
 
@@ -47,14 +48,18 @@ const LoginForm =({history})=>{
     return(
         <div>
             <form onSubmit={handleSubmit}>
+                <label htmlFor="username">Username:</label>
+                <input type="username" name="username" id="username" value={formData.username} onChange={handleFormData}/>
                 <label htmlFor="email">Email:</label>
                 <input type="email" name="email" id="email" value={formData.email} onChange={handleFormData}/>
                 <label htmlFor="password">Password</label>
                 <input type="password" name="password" id="password" value={formData.password} onChange={handleFormData}/>
+                <label htmlFor="password_confirmation">Password_Confirmation</label>
+                <input type="password" name="password_confirmation" id="password_confirmation" value={formData.password_confirmation} onChange={handleFormData}/>
                 <input type="submit" value="Login" />
             </form>
         </div>
     )
 }
 
-export default LoginForm
+export default SignUpForm

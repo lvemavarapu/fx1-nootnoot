@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { useGlobalState } from '../utils/stateContext'
+import { createMessage } from '../services/messagesServices'
 
 const MessageForm =({history})=>{
     const {store, dispatch} = useGlobalState()
-    const {loggedInUser,messageList}= store
+    const {loggedInUser}= store
 
     const initialFormData = {
-        text: ""
+        m_text: ""
     }
 
     const [formData, setFormData] = useState(initialFormData)
@@ -21,40 +22,49 @@ const MessageForm =({history})=>{
     function handleSubmit(e){
         e.preventDefault()
         console.log(formData)
-        addMessage(formData.text)
+        createMessage(formData)
+        .then((message) =>{
+            dispatch({
+                type: "addMessage",
+                data:message
+            })
+        })
+        .catch(error => console.log(error))
+
+        //addMessage(formData.text)
         //clean the form after submitting
         setFormData({
             ...formData,
-            text: ""
+            m_text: ""
         })
         return history.push("/messages")
     }
-    function addMessage(text){
+    // function addMessage(text){
 
-        const message = {
-          id:getNextId(),
-          text: text,
-          user: loggedInUser
-        }
-        // setMessageList(
-        //   (messageList) => [message, ...messageList]
-        // )
-        dispatch({
-          type:"addMessage",
-          data:message
-        })
-      }
-      function getNextId(){
-        const ids = messageList.map(msg =>msg.id) //3 2 1
-        return ids.sort()[ids.length-1] +1
-      }
+    //     const message = {
+    //       id:getNextId(),
+    //       text: text,
+    //       user: loggedInUser
+    //     }
+    //         dispatch({
+    //             type:"addMessage",
+    //             data:message
+    //           })
+        
+    //     .catch(error => console.log(error))
+       
+    //   }
+    //   function getNextId(){
+    //     const ids = messageList.map(msg =>msg.id) //3 2 1
+    //     return ids.sort()[ids.length-1] +1
+    //   }
 
     return(
         <div>
             {loggedInUser?
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="text">What's on your mind {loggedInUser}?</label>
-                    <input type="text" name="text" id="text" value={formData.text} onChange={handleFormData}/>
+                    <input type="m_text" name="m_text" id="m_" value={formData.m_text} onChange={handleFormData}/>
                     <input type="submit" value="Send" />
                 </form>
             : 

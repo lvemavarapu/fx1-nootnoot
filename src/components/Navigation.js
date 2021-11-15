@@ -9,9 +9,14 @@ const Navigation = () =>{
     function logout(e){
         e.preventDefault()
         console.log("log out")
+        sessionStorage.clear()
     //    activateUser("")
     dispatch({
         type: "setLoggedInUser",
+        data:""
+    })
+    dispatch({
+        type: "setToken",
         data:""
     })
     }

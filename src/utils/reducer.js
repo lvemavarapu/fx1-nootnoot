@@ -21,6 +21,16 @@ export default function reducer(state,action){
             }
 
         }
+        case"setToken":{
+            return{
+                ...state,
+                auth:{
+                    ...state.auth,
+                token:action.data
+                }
+            }
+
+        }
 
     }
 
