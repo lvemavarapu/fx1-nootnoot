@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const nootnootAPI = axios.create({
     // baseURL: 'http://localhost:3000'
-   baseURL:' https://git.heroku.com/nootnoot-api.git'
+   baseURL:'https://nootnoot-api.herokuapp.com/'
 
 })
 
