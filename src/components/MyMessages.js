@@ -2,11 +2,11 @@ import React from 'react'
 import Message from './Message'
 import { useState, useEffect } from 'react'
 import { getMessagesByUser } from '../services/messagesServices'
-//import { useGlobalState } from '../utils/stateContext'
+import { useGlobalState } from '../utils/stateContext'
 
 const MyMessages =({history})=>{
-    // const{store} = useGlobalState()
-    // const{loggedInUser}= store
+    const{store} = useGlobalState()
+    const{loggedInUser}= store
       const[myMessageList, setMyMessageList] = useState([])
       useEffect(()=>{
     const user =sessionStorage.getItem("username")
@@ -17,7 +17,8 @@ const MyMessages =({history})=>{
         .catch(err => console.error(err)) 
 
         },[]) 
-        f(!loggedInUser){ return history.push("/login")}
+        if(!loggedInUser)
+        { return history.push("/login")}
     return(
         <div>
             <h3>Messages</h3>
