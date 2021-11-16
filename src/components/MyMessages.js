@@ -17,7 +17,7 @@ const MyMessages =({history})=>{
         .catch(err => console.error(err)) 
 
         },[]) 
-       
+        f(!loggedInUser){ return history.push("/login")}
     return(
         <div>
             <h3>Messages</h3>
