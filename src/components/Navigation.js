@@ -30,6 +30,7 @@ const Navigation = () =>{
                          {loggedInUser}
                          <Link to ="/newmessage">Post an new message</Link>
                          <Link to ="/messages" onClick ={logout}>SignOut</Link>
+                         <Link to ="/messages/myMessages">My Messages</Link>
                 </>
                 :
                 <>

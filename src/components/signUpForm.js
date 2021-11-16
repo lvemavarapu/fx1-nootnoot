@@ -5,6 +5,7 @@ import { signUp } from '../services/authServices'
 const SignUpForm =({history})=>{
 
     const{dispatch} = useGlobalState()
+    const[error,setError]= useState("")
 
     console.log(history)
     const initialFormData = {
@@ -37,16 +38,20 @@ const SignUpForm =({history})=>{
             data:jwt
             
         })
-       })
-       .catch(error =>{console.log(error)})
-       
         return history.push("/messages")
+       })
+       .catch(error =>{
+           setError("user exists or password mismatch")
+       })
+       
+  
         
 
     }
 
     return(
         <div>
+            {error &&<p>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username:</label>
                 <input type="username" name="username" id="username" value={formData.username} onChange={handleFormData}/>
@@ -56,7 +61,7 @@ const SignUpForm =({history})=>{
                 <input type="password" name="password" id="password" value={formData.password} onChange={handleFormData}/>
                 <label htmlFor="password_confirmation">Password_Confirmation</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" value={formData.password_confirmation} onChange={handleFormData}/>
-                <input type="submit" value="Login" />
+                <input type="submit" value="Sign_up" />
             </form>
         </div>
     )

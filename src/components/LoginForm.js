@@ -5,6 +5,7 @@ import { signIn } from '../services/authServices'
 
 const LoginForm =({history})=>{
     const{dispatch} = useGlobalState()
+    const[error,setError] =useState("")
 
     console.log(history)
     const initialFormData = {
@@ -24,28 +25,36 @@ const LoginForm =({history})=>{
     function handleSubmit(e){
         e.preventDefault()
         signIn(formData)
-        .then(({username,jwt})=>{
-            sessionStorage.setItem("username",username)
-            sessionStorage.setItem("token",jwt)
+        .then((user)=>{
+            if(user.error){
+                setError(user.error)
+            }else{
+            sessionStorage.setItem("username",user.username)
+            sessionStorage.setItem("token",user.jwt)
             dispatch({
                 type: "setLoggedInUser",
-                data:username
+                data:user.username
                 
             })
             dispatch({
                 type: "setToken",
-                data:jwt
+                data:user.jwt
             })
+            return history.push("/messages")
+        }
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+            console.log(error)
+        })
         
-        return history.push("/messages")
+        
         
 
     }
 
     return(
         <div>
+            {error && <p>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <label htmlFor="email">Email:</label>
                 <input type="email" name="email" id="email" value={formData.email} onChange={handleFormData}/>

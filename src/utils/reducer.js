@@ -31,6 +31,14 @@ export default function reducer(state,action){
             }
 
         }
+        case "deleteMessage":{
+            const updatedMessageList = state.messageList.filter((message) => 
+            message.id !== parseInt (action.data))
+            return{
+                ...state,
+                messageList:updatedMessageList
+            }
+        }
 
     }
 
