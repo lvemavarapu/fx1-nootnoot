@@ -1,16 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useGlobalState } from '../utils/stateContext'
-import { createMessage } from '../services/messagesServices'
+import { createMessage,getMessageById,updateMessage } from '../services/messagesServices'
+import { useParams } from 'react-router-dom'
 
 const MessageForm =({history})=>{
     const {store, dispatch} = useGlobalState()
     const {loggedInUser}= store
+    const {id} = useParams()
 
     const initialFormData = {
         m_text: ""
     }
 
     const [formData, setFormData] = useState(initialFormData)
+
+    useEffect(() =>{
+        getMessageById(id)
+        .then(message =>{
+            setFormData({
+                m_text: message.text
+            })
+        })
+    }, [id])
 
     function handleFormData(e){
         setFormData({
@@ -21,7 +32,15 @@ const MessageForm =({history})=>{
 
     function handleSubmit(e){
         e.preventDefault()
-        console.log(formData)
+        if(id){
+            const data =  {id: id, ...formData}
+            updateMessage(data)
+            .then(message =>{
+                dispatch({type: "updateMessage",data:message})
+                history.push("/messages")
+            })
+        }
+        else{
         createMessage(formData)
         .then((message) =>{
             dispatch({
@@ -30,40 +49,16 @@ const MessageForm =({history})=>{
             })
         })
         .catch(error => console.log(error))
-
-        //addMessage(formData.text)
-        //clean the form after submitting
-        setFormData({
-            ...formData,
-            m_text: ""
-        })
+    }
         return history.push("/messages")
     }
-    // function addMessage(text){
-
-    //     const message = {
-    //       id:getNextId(),
-    //       text: text,
-    //       user: loggedInUser
-    //     }
-    //         dispatch({
-    //             type:"addMessage",
-    //             data:message
-    //           })
-        
-    //     .catch(error => console.log(error))
-       
-    //   }
-    //   function getNextId(){
-    //     const ids = messageList.map(msg =>msg.id) //3 2 1
-    //     return ids.sort()[ids.length-1] +1
-    //   }
+    
 
     return(
         <div>
             {loggedInUser?
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="text">What's on your mind {loggedInUser}?</label>
+                    <label htmlFor="text">Share your thoughts {loggedInUser}?</label>
                     <input type="m_text" name="m_text" id="m_" value={formData.m_text} onChange={handleFormData}/>
                     <input type="submit" value="Send" />
                 </form>

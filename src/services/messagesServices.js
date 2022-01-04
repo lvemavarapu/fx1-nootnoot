@@ -36,3 +36,7 @@ export async function deleteMessage(id){
       return response.data
 
   }
+  export async function updateMessage(data){
+    const response = await nootnootAPI.put(`/api/messages/${data.id}`, data)
+    return response.data
+}

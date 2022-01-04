@@ -39,6 +39,17 @@ export default function reducer(state,action){
                 messageList:updatedMessageList
             }
         }
+        case "updateMessage": {
+            const message = state.messageList.find(message => message.id === parseInt(action.data.id))
+            const restOfList = state.messageList.filter((message)=>
+                message.id !== parseInt(action.data.id)
+            )
+            const updatedMessage = Object.assign(message, action.data)
+            return {
+                ...state,
+                messageList: [updatedMessage, ...restOfList]
+            }
+        }
 
     }
 

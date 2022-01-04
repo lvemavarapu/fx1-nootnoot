@@ -37,12 +37,15 @@ const MessageDetails = () =>{
           
               <h4>{message.text}</h4>
               <p>{message.username} {message.posted_at}</p> 
-              {loggedInUser === message.username && 
-              <button onClick={removeMessage}>Delete Message</button>}
+              {loggedInUser === message.username && <>
+              <button onClick={()=> history.push(`/messages/update/&{id}`)}>Update message</button>
+              <button onClick={removeMessage}>Delete Message</button>
               
              
              
           </>
+        }
+        </>
           :
           <>
           <p>invalid id for a message</p>

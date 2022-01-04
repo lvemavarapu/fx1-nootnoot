@@ -51,7 +51,7 @@ const App = () => {
             <Route exact path="/messages"  component={Messages}/>
             <Route exact path="/messages/myMessages"  component={MyMessages}/>
             <Route exact path="/messages/:id" component={MessageDetails}/>
-              
+            <Route exact path="/messages/update/:id" component={MessageForm}/>
             <Route exact path="/about" component={About}/>
             <Route exact path="/login" component={LoginForm} /> 
             <Route exact path="/signUp" component={SignUpForm} /> 
