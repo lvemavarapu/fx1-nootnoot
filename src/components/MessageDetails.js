@@ -2,8 +2,8 @@ import React, { useState, useEffect} from 'react'
 import { Link, useParams,useHistory } from 'react-router-dom'
 import { getMessageById } from '../services/messagesServices';
 import { useGlobalState } from '../utils/stateContext';
-
 import { deleteMessage } from '../services/messagesServices';
+
 const MessageDetails = () =>{
    const{store,dispatch} = useGlobalState();
   const  {loggedInUser} =store
@@ -38,7 +38,7 @@ const MessageDetails = () =>{
               <h4>{message.text}</h4>
               <p>{message.username} {message.posted_at}</p> 
               {loggedInUser === message.username && <>
-              <button onClick={()=> history.push(`/messages/update/&{id}`)}>Update message</button>
+              <button onClick={()=> history.push(`/messages/update/${id}`)}>Update message</button>
               <button onClick={removeMessage}>Delete Message</button>
               
              

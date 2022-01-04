@@ -36,7 +36,10 @@ const MessageForm =({history})=>{
             const data =  {id: id, ...formData}
             updateMessage(data)
             .then(message =>{
-                dispatch({type: "updateMessage",data:message})
+                dispatch({
+                    type: "updateMessage", 
+                    data: message
+                })
                 history.push("/messages")
             })
         }
@@ -58,7 +61,7 @@ const MessageForm =({history})=>{
         <div>
             {loggedInUser?
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="text">Share your thoughts {loggedInUser}?</label>
+                    <label htmlFor="text">Share your thoughts {loggedInUser}</label>
                     <input type="m_text" name="m_text" id="m_" value={formData.m_text} onChange={handleFormData}/>
                     <input type="submit" value="Send" />
                 </form>
