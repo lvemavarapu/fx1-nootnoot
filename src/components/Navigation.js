@@ -1,11 +1,11 @@
 import React from 'react'
-import { Link,useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useGlobalState } from '../utils/stateContext'
 
 const Navigation = () =>{
     const {store,dispatch} = useGlobalState()
     const{loggedInUser} = store
-    const history = useHistory()
+ 
     function logout(e){
         e.preventDefault()
         console.log("log out")
